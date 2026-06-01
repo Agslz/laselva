@@ -22,16 +22,15 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
-    window.addEventListener("scroll", handleScroll)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-lg" 
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+        isScrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <nav className="container mx-auto px-4">

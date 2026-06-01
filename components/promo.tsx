@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ReserveButton } from "@/components/reserve-button"
 import { SectionBackground } from "@/components/section-background"
-import { venueImages } from "@/lib/venue-images"
 import { 
   UtensilsCrossed, 
   GlassWater, 
@@ -37,7 +36,7 @@ const menuItems = {
 
 export function Promo() {
   return (
-    <SectionBackground id="promociones" image={venueImages.candyBar} variant="sunset" imageOpacity={0.2}>
+    <SectionBackground id="promociones" variant="sunset">
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="badge-safari bg-primary text-primary-foreground mb-4 animate-pulse">
