@@ -1,12 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { ReserveButton } from "@/components/reserve-button"
+import { SectionBackground } from "@/components/section-background"
+import { venueImages } from "@/lib/venue-images"
 import { 
   UtensilsCrossed, 
   GlassWater, 
   Candy, 
   Package,
-  Sparkles,
-  Phone
+  Phone,
+  Gift,
 } from "lucide-react"
 
 const menuItems = {
@@ -35,12 +37,11 @@ const menuItems = {
 
 export function Promo() {
   return (
-    <section id="promociones" className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-      <div className="container mx-auto px-4">
+    <SectionBackground id="promociones" image={venueImages.candyBar} variant="sunset" imageOpacity={0.2}>
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-semibold mb-4 animate-pulse">
-            <Sparkles className="inline h-4 w-4 mr-1" />
+          <span className="badge-safari bg-primary text-primary-foreground mb-4 animate-pulse">
+            <Gift className="h-4 w-4" />
             Promo Especial
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
@@ -53,7 +54,7 @@ export function Promo() {
 
         {/* Menu Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
-          <Card className="border-none bg-card hover:shadow-lg transition-all">
+          <Card className="card-jungle hover:shadow-xl transition-all">
             <CardHeader className="pb-4">
               <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mb-2">
                 <UtensilsCrossed className="h-6 w-6 text-secondary-foreground" />
@@ -72,7 +73,7 @@ export function Promo() {
             </CardContent>
           </Card>
 
-          <Card className="border-none bg-card hover:shadow-lg transition-all">
+          <Card className="card-jungle hover:shadow-xl transition-all">
             <CardHeader className="pb-4">
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-2">
                 <GlassWater className="h-6 w-6 text-primary" />
@@ -91,7 +92,7 @@ export function Promo() {
             </CardContent>
           </Card>
 
-          <Card className="border-none bg-card hover:shadow-lg transition-all">
+          <Card className="card-jungle hover:shadow-xl transition-all">
             <CardHeader className="pb-4">
               <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
                 <Candy className="h-6 w-6 text-accent" />
@@ -110,7 +111,7 @@ export function Promo() {
             </CardContent>
           </Card>
 
-          <Card className="border-none bg-card hover:shadow-lg transition-all">
+          <Card className="card-jungle hover:shadow-xl transition-all">
             <CardHeader className="pb-4">
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-2">
                 <Package className="h-6 w-6 text-muted-foreground" />
@@ -131,25 +132,22 @@ export function Promo() {
         </div>
 
         {/* Flexible Note */}
-        <div className="max-w-2xl mx-auto text-center bg-card rounded-2xl p-8 shadow-lg">
+        <div className="max-w-2xl mx-auto text-center card-jungle rounded-2xl p-8 shadow-lg">
           <p className="text-lg text-foreground mb-6">
             <span className="font-semibold">La propuesta puede modificarse</span> o ajustarse según el presupuesto y las necesidades del cliente.
           </p>
-          <Button 
+          <ReserveButton 
             size="lg"
             className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full"
-            asChild
           >
-            <a href="https://wa.me/5492616817696" target="_blank" rel="noopener noreferrer">
-              <Phone className="mr-2 h-5 w-5" />
-              Consultar Promo Completa
-            </a>
-          </Button>
+            <Phone className="mr-2 h-5 w-5" />
+            Consultar Promo Completa
+          </ReserveButton>
         </div>
 
         {/* Bonus Section */}
         <div className="mt-16 max-w-4xl mx-auto">
-          <Card className="border-2 border-dashed border-secondary bg-secondary/5">
+          <Card className="border-2 border-dashed border-secondary bg-secondary/10 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <span className="inline-block px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm font-semibold mb-4">
                 BONUS
@@ -166,7 +164,6 @@ export function Promo() {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </section>
+    </SectionBackground>
   )
 }

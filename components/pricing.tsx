@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Check, Star, Phone } from "lucide-react"
+import { ReserveButton } from "@/components/reserve-button"
+import { SectionBackground } from "@/components/section-background"
+import { venueImages } from "@/lib/venue-images"
+import { Check, Star, Phone, Coins } from "lucide-react"
 
 const plans = [
   {
@@ -51,11 +53,11 @@ const plans = [
 
 export function Pricing() {
   return (
-    <section id="precios" className="py-20 bg-muted">
-      <div className="container mx-auto px-4">
+    <SectionBackground id="precios" image={venueImages.juegos} variant="jungle" imageOpacity={0.16}>
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-secondary/30 text-secondary-foreground rounded-full text-sm font-semibold mb-4">
+          <span className="badge-safari bg-secondary/30 text-secondary-foreground mb-4">
+            <Coins className="h-4 w-4" />
             Valores Transparentes
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
@@ -71,10 +73,10 @@ export function Pricing() {
           {plans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`relative overflow-hidden transition-all hover:shadow-xl ${
+              className={`relative overflow-hidden transition-all hover:shadow-xl card-jungle ${
                 plan.popular 
-                  ? "border-2 border-primary scale-105 shadow-lg" 
-                  : "border-none"
+                  ? "border-2 border-primary scale-105 shadow-lg ring-2 ring-primary/20" 
+                  : ""
               }`}
             >
               {plan.highlight && (
@@ -108,19 +110,16 @@ export function Pricing() {
                   ))}
                 </ul>
                 
-                <Button 
+                <ReserveButton 
                   className={`w-full rounded-full ${
                     plan.popular 
                       ? "bg-primary hover:bg-primary/90" 
                       : "bg-accent hover:bg-accent/90 text-accent-foreground"
                   }`}
-                  asChild
                 >
-                  <a href="https://wa.me/5492616817696" target="_blank" rel="noopener noreferrer">
-                    <Phone className="mr-2 h-4 w-4" />
-                    Consultar
-                  </a>
-                </Button>
+                  <Phone className="mr-2 h-4 w-4" />
+                  Consultar
+                </ReserveButton>
               </CardContent>
             </Card>
           ))}
@@ -132,7 +131,6 @@ export function Pricing() {
             * Promociones no acumulables. Hora extra: $40.000. Adicional por persona: $3.600.
           </p>
         </div>
-      </div>
-    </section>
+    </SectionBackground>
   )
 }

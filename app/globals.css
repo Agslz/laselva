@@ -4,19 +4,19 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.98 0.01 120);
-  --foreground: oklch(0.2 0.05 150);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.05 150);
+  --background: oklch(0.97 0.035 130);
+  --foreground: oklch(0.22 0.06 150);
+  --card: oklch(0.99 0.01 120);
+  --card-foreground: oklch(0.22 0.06 150);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.05 150);
-  --primary: oklch(0.5 0.18 145);
+  --popover-foreground: oklch(0.22 0.06 150);
+  --primary: oklch(0.46 0.17 145);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.75 0.15 50);
-  --secondary-foreground: oklch(0.2 0.05 150);
-  --muted: oklch(0.95 0.02 120);
-  --muted-foreground: oklch(0.45 0.05 150);
-  --accent: oklch(0.7 0.2 330);
+  --secondary: oklch(0.74 0.19 55);
+  --secondary-foreground: oklch(0.22 0.06 150);
+  --muted: oklch(0.93 0.045 130);
+  --muted-foreground: oklch(0.42 0.06 150);
+  --accent: oklch(0.66 0.22 30);
   --accent-foreground: oklch(0.98 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
@@ -121,5 +121,24 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(ellipse at 10% 0%, oklch(0.88 0.08 130 / 0.35) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 20%, oklch(0.9 0.1 55 / 0.25) 0%, transparent 45%),
+      radial-gradient(ellipse at 50% 100%, oklch(0.88 0.06 145 / 0.2) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .jungle-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232d6a4f' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .card-jungle {
+    @apply border border-primary/15 bg-card/90 shadow-md backdrop-blur-sm;
+  }
+
+  .badge-safari {
+    @apply inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold shadow-sm;
   }
 }

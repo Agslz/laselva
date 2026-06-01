@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Trees } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { SectionBackground } from "@/components/section-background"
+import { venueImages } from "@/lib/venue-images"
 
 const images = [
   {
@@ -72,18 +74,18 @@ export function Gallery() {
   }
 
   return (
-    <section id="galeria" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <SectionBackground id="galeria" image={venueImages.murales} variant="playful" imageOpacity={0.15}>
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mb-4">
+          <span className="badge-safari bg-accent/20 text-accent mb-4">
+            <Trees className="h-4 w-4" />
             Conocé el Espacio
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
             Nuestras Instalaciones
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Descubrí todo lo que La Selva tiene preparado para que tu evento sea inolvidable.
+            Murales, inflables y decoración de selva con personajes de Madagascar. Descubrí todo lo que La Selva tiene preparado para que tu evento sea inolvidable.
           </p>
         </div>
 
@@ -92,7 +94,7 @@ export function Gallery() {
           {images.map((image, index) => (
             <div 
               key={index}
-              className={`relative overflow-hidden rounded-xl cursor-pointer group ${
+              className={`relative overflow-hidden rounded-xl cursor-pointer group ring-2 ring-primary/10 shadow-lg ${
                 index === 0 ? "sm:col-span-2 sm:row-span-2 md:col-span-2 md:row-span-2" : ""
               }`}
               onClick={() => openLightbox(index)}
@@ -162,7 +164,6 @@ export function Gallery() {
             </div>
           </div>
         )}
-      </div>
-    </section>
+    </SectionBackground>
   )
 }

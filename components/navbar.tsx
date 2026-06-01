@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { ReserveButton } from "@/components/reserve-button"
 import { Menu, X, Phone } from "lucide-react"
 
 const navItems = [
@@ -61,15 +62,10 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full"
-              asChild
-            >
-              <a href="https://wa.me/5492613455391" target="_blank" rel="noopener noreferrer">
-                <Phone className="mr-2 h-4 w-4" />
-                Contactar
-              </a>
-            </Button>
+            <ReserveButton className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full">
+              <Phone className="mr-2 h-4 w-4" />
+              Reservar
+            </ReserveButton>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,15 +96,13 @@ export function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <Button 
+              <ReserveButton 
                 className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full mt-2"
-                asChild
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                <a href="https://wa.me/5492613455391" target="_blank" rel="noopener noreferrer">
-                  <Phone className="mr-2 h-4 w-4" />
-                  Contactar
-                </a>
-              </Button>
+                <Phone className="mr-2 h-4 w-4" />
+                Reservar
+              </ReserveButton>
             </div>
           </div>
         )}

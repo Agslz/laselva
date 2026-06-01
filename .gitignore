@@ -6,11 +6,19 @@ __v0_jsx-dev-runtime.ts
 .v0-trash/
 .vercel/
 
-# Environment variables
+# Environment variables (nunca subir URLs reales)
+.env
 .env*.local
 
-# Common ignores
-node_modules
+# Dependencias y build
+node_modules/
 .next/
+out/
+
+# npm si el proyecto usa pnpm (CI usa pnpm-lock.yaml)
+package-lock.json
+
+# Sistema / IDE
 .DS_Store
 .vercel
+Thumbs.db

@@ -1,4 +1,4 @@
-import { Phone, MapPin, Clock } from "lucide-react"
+import { MapPin, Clock } from "lucide-react"
 
 export function Footer() {
   return (
@@ -56,17 +56,6 @@ export function Footer() {
               <li className="flex items-center gap-3 text-background/70">
                 <Clock className="h-5 w-5" />
                 <span>Lun-Sáb: 9:30-14:00 y 18:00-21:30</span>
-              </li>
-              <li>
-                <a 
-                  href="https://wa.me/5492616817696" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-background/70 hover:text-background transition-colors"
-                >
-                  <Phone className="h-5 w-5" />
-                  <span>WhatsApp</span>
-                </a>
               </li>
             </ul>
           </div>
