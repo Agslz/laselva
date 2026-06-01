@@ -74,7 +74,7 @@ Reiniciá el servidor de desarrollo para que tome la variable.
 ### Si publicás en GitHub Pages
 
 1. GitHub → tu repo → **Settings → Secrets and variables → Actions**.
-2. Creá un secret: **`GOOGLE_SHEETS_URL`** con la misma URL `/exec`.
+2. Creá un secret en **Actions → Secrets** con la misma URL `/exec`. Nombre: **`GOOGLE_SHEETS_URL`** o **`NEXT_PUBLIC_GOOGLE_SHEETS_URL`** (cualquiera de los dos).
 
 ---
 

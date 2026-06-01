@@ -36,7 +36,8 @@ jobs:
         run: pnpm build
         env:
           BASE_PATH: /${{ github.event.repository.name }}
-          NEXT_PUBLIC_GOOGLE_SHEETS_URL: ${{ secrets.GOOGLE_SHEETS_URL }}
+          # Acepta GOOGLE_SHEETS_URL o NEXT_PUBLIC_GOOGLE_SHEETS_URL (nombre en GitHub Secrets)
+          NEXT_PUBLIC_GOOGLE_SHEETS_URL: ${{ secrets.GOOGLE_SHEETS_URL || secrets.NEXT_PUBLIC_GOOGLE_SHEETS_URL }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

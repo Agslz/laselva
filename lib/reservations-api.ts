@@ -42,11 +42,9 @@ const REDEPLOY_MSG =
 export async function submitReservation(payload: Record<string, unknown>): Promise<void> {
   const url = getGoogleSheetsUrl()
   if (!url) {
-    const bodyText = Object.entries(payload)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n")
-    window.location.href = `mailto:reservas@laselva.com?subject=${encodeURIComponent("Nueva reserva - La Selva")}&body=${encodeURIComponent(bodyText)}`
-    return
+    throw new Error(
+      "Las reservas online no están configuradas en este sitio. Si sos el administrador, configurá NEXT_PUBLIC_GOOGLE_SHEETS_URL al publicar."
+    )
   }
 
   const json = JSON.stringify(payload)
