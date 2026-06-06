@@ -11,7 +11,7 @@ import { ReservationProvider } from "@/components/reservation-provider"
 export default function Home() {
   return (
     <ReservationProvider>
-      <main className="min-h-screen pb-24 md:pb-0">
+      <main className="min-h-screen overflow-x-clip pb-24 md:pb-0">
         <Navbar />
         <Hero />
         <Services />

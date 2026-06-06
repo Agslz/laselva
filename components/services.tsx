@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { SectionBackground } from "@/components/section-background"
+import { SERVICIOS_CHARACTERS } from "@/lib/madagascar-characters"
 import { TURNOS } from "@/lib/booking"
 import { 
   Gamepad2, 
@@ -56,7 +57,7 @@ const amenities = [
 
 export function Services() {
   return (
-    <SectionBackground id="servicios" variant="jungle">
+    <SectionBackground id="servicios" variant="jungle" characters={SERVICIOS_CHARACTERS}>
       {/* Section Header */}
       <div className="text-center mb-16">
         <span className="badge-safari bg-secondary/25 text-secondary-foreground mb-4">

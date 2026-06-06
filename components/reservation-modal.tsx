@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { Loader2, CheckCircle2 } from "lucide-react"
+import { Loader2, CheckCircle2, X } from "lucide-react"
+import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -45,16 +46,23 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
   const [error, setError] = useState<string | null>(null)
   const [contractRead, setContractRead] = useState(false)
   const [acceptedContract, setAcceptedContract] = useState(false)
+  const [attemptedStep1, setAttemptedStep1] = useState(false)
+  const [attemptedStep2, setAttemptedStep2] = useState(false)
+  const [cantidadInput, setCantidadInput] = useState("20")
   const contractRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (open) {
-      setForm(buildPrefilledForm(prefill))
+      const initial = buildPrefilledForm(prefill)
+      setForm(initial)
+      setCantidadInput(String(initial.cantidadPersonas))
       setStep(1)
       setSubmitted(false)
       setError(null)
       setContractRead(false)
       setAcceptedContract(false)
+      setAttemptedStep1(false)
+      setAttemptedStep2(false)
     }
   }, [open, prefill])
 
@@ -62,19 +70,59 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
     setForm((prev) => ({ ...prev, [key]: value }))
   }
 
-  const validateStep1 = () =>
-    form.apellido.trim() &&
-    form.nombre.trim() &&
-    form.domicilio.trim() &&
-    form.telefono.trim() &&
-    form.email.trim() &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
 
-  const validateStep2 = () =>
-    form.tipoEvento &&
-    form.nombreAgasajado.trim() &&
-    form.cantidadPersonas >= 10 &&
-    form.comboId
+  const step1Errors = {
+    nombre: !form.nombre.trim(),
+    apellido: !form.apellido.trim(),
+    domicilio: !form.domicilio.trim(),
+    telefono: !form.telefono.trim(),
+    email: !form.email.trim() || !emailValid,
+  }
+
+  const step2Errors = {
+    tipoEvento: !form.tipoEvento,
+    nombreAgasajado: !form.nombreAgasajado.trim(),
+    cantidadPersonas:
+      cantidadInput.trim() === "" ||
+      form.cantidadPersonas < 10 ||
+      form.cantidadPersonas > 50,
+    comboId: !form.comboId,
+  }
+
+  const validateStep1 = () => !Object.values(step1Errors).some(Boolean)
+
+  const validateStep2 = () => !Object.values(step2Errors).some(Boolean)
+
+  const fieldClass = (hasError: boolean) =>
+    cn(hasError && "border-destructive ring-destructive/30 ring-[3px]")
+
+  const handleCantidadChange = (raw: string) => {
+    const digits = raw.replace(/\D/g, "")
+    if (digits === "") {
+      setCantidadInput("")
+      update("cantidadPersonas", 0)
+      return
+    }
+    const parsed = Math.min(50, parseInt(digits, 10))
+    setCantidadInput(String(parsed))
+    update("cantidadPersonas", parsed)
+  }
+
+  const tryAdvanceFromStep1 = () => {
+    setAttemptedStep1(true)
+    if (validateStep1()) setStep(2)
+  }
+
+  const tryAdvanceFromStep2 = () => {
+    setAttemptedStep2(true)
+    if (validateStep2()) setStep(3)
+  }
+
+  const selectedCombo = COMBOS.find((c) => c.id === form.comboId)
+  const selectedCotillon = COTILLON_EXTRAS.filter((e) =>
+    form.cotillonExtras.includes(e.id)
+  )
 
   const validateStep3 = () => contractRead && acceptedContract
 
@@ -186,7 +234,12 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                     value={form.nombre}
                     onChange={(e) => update("nombre", e.target.value)}
                     placeholder="María"
+                    aria-invalid={attemptedStep1 && step1Errors.nombre}
+                    className={fieldClass(attemptedStep1 && step1Errors.nombre)}
                   />
+                  {attemptedStep1 && step1Errors.nombre && (
+                    <p className="text-xs text-destructive">Completá el nombre</p>
+                  )}
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="apellido">Apellido</Label>
@@ -195,7 +248,12 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                     value={form.apellido}
                     onChange={(e) => update("apellido", e.target.value)}
                     placeholder="González"
+                    aria-invalid={attemptedStep1 && step1Errors.apellido}
+                    className={fieldClass(attemptedStep1 && step1Errors.apellido)}
                   />
+                  {attemptedStep1 && step1Errors.apellido && (
+                    <p className="text-xs text-destructive">Completá el apellido</p>
+                  )}
                 </div>
               </div>
               <div className="space-y-1.5">
@@ -205,7 +263,12 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                   value={form.domicilio}
                   onChange={(e) => update("domicilio", e.target.value)}
                   placeholder="Calle, número, ciudad"
+                  aria-invalid={attemptedStep1 && step1Errors.domicilio}
+                  className={fieldClass(attemptedStep1 && step1Errors.domicilio)}
                 />
+                {attemptedStep1 && step1Errors.domicilio && (
+                  <p className="text-xs text-destructive">Completá el domicilio</p>
+                )}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1.5">
@@ -216,7 +279,12 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                     value={form.telefono}
                     onChange={(e) => update("telefono", e.target.value)}
                     placeholder="261 000 0000"
+                    aria-invalid={attemptedStep1 && step1Errors.telefono}
+                    className={fieldClass(attemptedStep1 && step1Errors.telefono)}
                   />
+                  {attemptedStep1 && step1Errors.telefono && (
+                    <p className="text-xs text-destructive">Completá el teléfono</p>
+                  )}
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="email">Email</Label>
@@ -226,7 +294,14 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
                     placeholder="correo@ejemplo.com"
+                    aria-invalid={attemptedStep1 && step1Errors.email}
+                    className={fieldClass(attemptedStep1 && step1Errors.email)}
                   />
+                  {attemptedStep1 && step1Errors.email && (
+                    <p className="text-xs text-destructive">
+                      {!form.email.trim() ? "Completá el email" : "Email inválido"}
+                    </p>
+                  )}
                 </div>
               </div>
             </>
@@ -241,7 +316,11 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                   id="tipoEvento"
                   value={form.tipoEvento}
                   onChange={(e) => update("tipoEvento", e.target.value as ReservationFormData["tipoEvento"])}
-                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                  aria-invalid={attemptedStep2 && step2Errors.tipoEvento}
+                  className={cn(
+                    "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none",
+                    fieldClass(attemptedStep2 && step2Errors.tipoEvento)
+                  )}
                 >
                   <option value="">Seleccioná una opción</option>
                   {EVENT_TYPES.map((type) => (
@@ -250,6 +329,9 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                     </option>
                   ))}
                 </select>
+                {attemptedStep2 && step2Errors.tipoEvento && (
+                  <p className="text-xs text-destructive">Seleccioná el tipo de evento</p>
+                )}
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="nombreAgasajado">Nombre del agasajado/a</Label>
@@ -258,39 +340,76 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                   value={form.nombreAgasajado}
                   onChange={(e) => update("nombreAgasajado", e.target.value)}
                   placeholder="Nombre del cumpleañero/a"
+                  aria-invalid={attemptedStep2 && step2Errors.nombreAgasajado}
+                  className={fieldClass(attemptedStep2 && step2Errors.nombreAgasajado)}
                 />
+                {attemptedStep2 && step2Errors.nombreAgasajado && (
+                  <p className="text-xs text-destructive">Completá el nombre del agasajado/a</p>
+                )}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="cantidad">Cantidad de personas (máx. 50)</Label>
+                <Label htmlFor="cantidad">Cantidad de personas (mín. 10, máx. 50)</Label>
                 <Input
                   id="cantidad"
-                  type="number"
-                  min={10}
-                  max={50}
-                  value={form.cantidadPersonas}
-                  onChange={(e) => update("cantidadPersonas", Number(e.target.value))}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="off"
+                  value={cantidadInput}
+                  onChange={(e) => handleCantidadChange(e.target.value)}
+                  placeholder="Ej: 25"
+                  aria-invalid={attemptedStep2 && step2Errors.cantidadPersonas}
+                  className={fieldClass(attemptedStep2 && step2Errors.cantidadPersonas)}
                 />
+                {attemptedStep2 && step2Errors.cantidadPersonas && (
+                  <p className="text-xs text-destructive">
+                    {cantidadInput.trim() === ""
+                      ? "Indicá la cantidad de personas"
+                      : "Debe ser entre 10 y 50 personas"}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
-                <Label>Elegí un combo (prueba)</Label>
+                <Label>Elegí un combo</Label>
                 <div className="grid gap-2">
-                  {COMBOS.map((combo) => (
-                    <button
-                      key={combo.id}
-                      type="button"
-                      onClick={() => update("comboId", combo.id)}
-                      className={`rounded-xl border p-3 text-left transition-colors ${
-                        form.comboId === combo.id
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/40"
-                      }`}
-                    >
-                      <p className="font-semibold text-foreground">{combo.nombre}</p>
-                      <p className="text-sm text-muted-foreground">{combo.detalle}</p>
-                      <p className="text-sm font-medium text-primary mt-1">{formatArs(combo.precio)}</p>
-                    </button>
-                  ))}
+                  {COMBOS.map((combo) => {
+                    const isSelected = form.comboId === combo.id
+                    return (
+                      <div
+                        key={combo.id}
+                        className={cn(
+                          "relative rounded-xl border p-3 transition-colors",
+                          isSelected
+                            ? "border-primary bg-primary/10"
+                            : "border-border",
+                          attemptedStep2 && step2Errors.comboId && !form.comboId && "border-destructive/50"
+                        )}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => update("comboId", isSelected ? "" : combo.id)}
+                          className="w-full text-left pr-8"
+                        >
+                          <p className="font-semibold text-foreground">{combo.nombre}</p>
+                          <p className="text-sm text-muted-foreground">{combo.detalle}</p>
+                          <p className="text-sm font-medium text-primary mt-1">{formatArs(combo.precio)}</p>
+                        </button>
+                        {isSelected && (
+                          <button
+                            type="button"
+                            onClick={() => update("comboId", "")}
+                            className="absolute top-2 right-2 rounded-full p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                            aria-label="Quitar combo seleccionado"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
+                {attemptedStep2 && step2Errors.comboId && (
+                  <p className="text-xs text-destructive">Seleccioná un combo</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>Agregados de cotillón</Label>
@@ -341,23 +460,32 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                 className="max-h-[320px] overflow-y-auto rounded-xl border border-border bg-muted/30 p-4 space-y-5"
               >
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-foreground">Combos de prueba</h4>
-                  {COMBOS.map((combo) => (
-                    <div key={combo.id} className="rounded-lg border border-border bg-background p-3">
-                      <p className="font-medium">{combo.nombre}</p>
-                      <p className="text-sm text-muted-foreground">{combo.detalle}</p>
-                      <p className="text-sm font-semibold text-primary">{formatArs(combo.precio)}</p>
+                  <h4 className="font-semibold text-foreground">Tu combo elegido</h4>
+                  {selectedCombo ? (
+                    <div className="rounded-lg border border-primary/30 bg-background p-3">
+                      <p className="font-medium">{selectedCombo.nombre}</p>
+                      <p className="text-sm text-muted-foreground">{selectedCombo.detalle}</p>
+                      <p className="text-sm font-semibold text-primary">{formatArs(selectedCombo.precio)}</p>
                     </div>
-                  ))}
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Sin combo seleccionado</p>
+                  )}
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-foreground">Agregados de cotillón</h4>
-                  {COTILLON_EXTRAS.map((extra) => (
-                    <div key={extra.id} className="flex items-center justify-between rounded-lg border border-border bg-background p-3">
-                      <p className="text-sm">{extra.nombre}</p>
-                      <p className="text-sm font-semibold text-primary">{formatArs(extra.precio)}</p>
-                    </div>
-                  ))}
+                  <h4 className="font-semibold text-foreground">Agregados de cotillón elegidos</h4>
+                  {selectedCotillon.length > 0 ? (
+                    selectedCotillon.map((extra) => (
+                      <div
+                        key={extra.id}
+                        className="flex items-center justify-between rounded-lg border border-border bg-background p-3"
+                      >
+                        <p className="text-sm">{extra.nombre}</p>
+                        <p className="text-sm font-semibold text-primary">{formatArs(extra.precio)}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Sin agregados de cotillón</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-semibold text-foreground">Valores de referencia por roturas</h4>
@@ -428,12 +556,26 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
                 isDatePartiallyBlocked={isDatePartiallyBlocked}
               />
               {form.fecha && form.turno && (
-                <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
-                  <span className="font-medium text-foreground">Resumen: </span>
-                  {getDayOfWeek(form.fecha)}, {formatDateDisplay(form.fecha)} —{" "}
-                  {TURNOS.find((t) => t.id === form.turno)?.label} (
-                  {TURNOS.find((t) => t.id === form.turno)?.horario})
-                </p>
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
+                    <span className="font-medium text-foreground">Fecha: </span>
+                    {getDayOfWeek(form.fecha)}, {formatDateDisplay(form.fecha)} —{" "}
+                    {TURNOS.find((t) => t.id === form.turno)?.label} (
+                    {TURNOS.find((t) => t.id === form.turno)?.horario})
+                  </p>
+                  {selectedCombo && (
+                    <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
+                      <span className="font-medium text-foreground">Combo: </span>
+                      {selectedCombo.nombre} — {formatArs(selectedCombo.precio)}
+                    </p>
+                  )}
+                  {selectedCotillon.length > 0 && (
+                    <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-3">
+                      <span className="font-medium text-foreground">Cotillón: </span>
+                      {selectedCotillon.map((e) => e.nombre).join(", ")}
+                    </p>
+                  )}
+                </div>
               )}
             </>
           )}
@@ -453,17 +595,11 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
             <Button
               type="button"
               onClick={() => {
-                if (step === 1 && validateStep1()) setStep(2)
-                else if (step === 2 && validateStep2()) setStep(3)
+                if (step === 1) tryAdvanceFromStep1()
+                else if (step === 2) tryAdvanceFromStep2()
                 else if (step === 3 && validateStep3()) setStep(4)
               }}
-              disabled={
-                step === 1
-                  ? !validateStep1()
-                  : step === 2
-                    ? !validateStep2()
-                    : !validateStep3()
-              }
+              disabled={step === 3 && !validateStep3()}
               className="flex-1 rounded-full"
             >
               Continuar

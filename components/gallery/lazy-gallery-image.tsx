@@ -32,7 +32,7 @@ export function LazyGalleryImage({
           observer.disconnect()
         }
       },
-      { rootMargin: featured ? "300px" : "120px", threshold: 0.01 }
+      { rootMargin: featured ? "80px" : "40px", threshold: 0.01 }
     )
 
     observer.observe(node)

@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ReserveButton } from "@/components/reserve-button"
 import { SectionBackground } from "@/components/section-background"
+import { UBICACION_CHARACTERS } from "@/lib/madagascar-characters"
 import { MapPin, Clock, Phone, MapPinned } from "lucide-react"
 
 const schedules = [
@@ -11,7 +12,7 @@ const schedules = [
 
 export function Location() {
   return (
-    <SectionBackground id="ubicacion" variant="playful">
+    <SectionBackground id="ubicacion" variant="playful" characters={UBICACION_CHARACTERS}>
         <div className="text-center mb-16">
           <span className="badge-safari bg-primary/15 text-primary mb-4">
             <MapPinned className="h-4 w-4" />

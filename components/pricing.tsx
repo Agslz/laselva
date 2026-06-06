@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ReserveButton } from "@/components/reserve-button"
 import { SectionBackground } from "@/components/section-background"
+import { PRECIOS_CHARACTERS } from "@/lib/madagascar-characters"
 import { Check, Star, Phone, Coins } from "lucide-react"
 
 const plans = [
@@ -52,7 +53,7 @@ const plans = [
 
 export function Pricing() {
   return (
-    <SectionBackground id="precios" variant="jungle">
+    <SectionBackground id="precios" variant="jungle" characters={PRECIOS_CHARACTERS}>
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="badge-safari bg-secondary/30 text-secondary-foreground mb-4">

@@ -1,10 +1,11 @@
 import { Trees } from "lucide-react"
 import { SectionBackground } from "@/components/section-background"
+import { GALERIA_CHARACTERS } from "@/lib/madagascar-characters"
 import { GalleryGrid } from "@/components/gallery/gallery-grid"
 
 export function Gallery() {
   return (
-    <SectionBackground id="galeria" variant="playful">
+    <SectionBackground id="galeria" variant="playful" characters={GALERIA_CHARACTERS}>
       <div className="text-center mb-16">
         <span className="badge-safari bg-accent/20 text-accent mb-4">
           <Trees className="h-4 w-4" />

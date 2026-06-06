@@ -119,24 +119,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground;
-    background-image: radial-gradient(
-      ellipse at 50% 0%,
-      oklch(0.9 0.07 130 / 0.4) 0%,
-      transparent 55%
-    );
-    background-attachment: scroll;
+    overflow-x: clip;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+  body {
+    @apply bg-emerald-50/80 text-foreground;
   }
 }
 
@@ -149,19 +137,22 @@
     @apply border border-primary/15 bg-card shadow-md;
   }
 
-  .content-auto {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
-  }
-
   .gallery-grid {
     contain: layout style;
   }
 
   .gallery-cell {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 280px;
-    contain: layout paint style;
+    contain: layout style;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   .badge-safari {
