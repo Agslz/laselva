@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { assetPath } from "@/lib/asset-path"
 import { cn } from "@/lib/utils"
 
 export interface SectionCharacterConfig {
@@ -61,6 +62,8 @@ export function SectionCharacter({
     ? { height: `min(${height}px, 45vh)` }
     : { width: `min(${width}px, 40vw)` }
 
+  const imageSrc = assetPath(src)
+
   return (
     <>
       {/* Mobile: marca de agua detrás del contenido (z-10) */}
@@ -74,7 +77,7 @@ export function SectionCharacter({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src}
+          src={imageSrc}
           alt=""
           decoding="async"
           draggable={false}
@@ -103,7 +106,7 @@ export function SectionCharacter({
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src}
+          src={imageSrc}
           alt=""
           decoding="async"
           draggable={false}

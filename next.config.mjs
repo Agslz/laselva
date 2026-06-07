@@ -6,6 +6,9 @@ const basePath = process.env.BASE_PATH?.trim() || ''
 const nextConfig = {
   output: 'export',
   ...(basePath ? { basePath } : {}),
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
