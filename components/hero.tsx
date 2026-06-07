@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ReserveButton } from "@/components/reserve-button"
+import { assetPath } from "@/lib/asset-path"
 import { venueImages } from "@/lib/venue-images"
 import { MapPin, Clock, Leaf, Sparkles } from "lucide-react"
 
@@ -9,7 +10,7 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src={venueImages.hero}
+          src={assetPath(venueImages.hero)}
           alt="Pelotero La Selva — temática Madagascar"
           fill
           priority
