@@ -38,7 +38,7 @@ export function Navbar() {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <span className={`text-2xl font-bold transition-colors ${
-              isScrolled ? "text-primary" : "text-white"
+              isScrolled ? "text-primary" : "text-white hero-nav-text"
             }`}>
               La Selva
             </span>
@@ -51,7 +51,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition-colors hover:text-accent ${
-                  isScrolled ? "text-foreground" : "text-white"
+                  isScrolled ? "text-foreground" : "text-white hero-nav-text"
                 }`}
               >
                 {item.label}
@@ -74,9 +74,9 @@ export function Navbar() {
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
           >
             {isMobileMenuOpen ? (
-              <X className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-white"}`} />
+              <X className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-white hero-nav-text"}`} />
             ) : (
-              <Menu className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-white"}`} />
+              <Menu className={`h-6 w-6 ${isScrolled ? "text-foreground" : "text-white hero-nav-text"}`} />
             )}
           </button>
         </div>

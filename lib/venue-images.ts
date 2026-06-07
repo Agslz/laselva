@@ -1,6 +1,6 @@
 /** Fotos del salón — decoración selva / Madagascar */
 export const venueImages = {
-  hero: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen-PfFvn4GGzzlAyAQnjzefZKEI3qnAFv.png",
+  hero: "/hero-pelotero-la-selva.png",
   salon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen-HozDhyqaJjKeEav5xBu4JWnHMJs6lH.png",
   juegos: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen-zELlAPUlOFkfikRv8lcvKe68aNchAd.png",
   laberinto: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagen-Png3lETOJYzEwE1KWH9w1ZtFnLuMwR.png",
