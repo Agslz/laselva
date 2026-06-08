@@ -1,9 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import { ReserveButton } from "@/components/reserve-button"
-import { Menu, X, Phone } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 const navItems = [
   { href: "#servicios", label: "Servicios" },
@@ -61,10 +60,7 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <ReserveButton className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full">
-              <Phone className="mr-2 h-4 w-4" />
-              Reservar
-            </ReserveButton>
+            <ReserveButton>Reservar</ReserveButton>
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,11 +91,10 @@ export function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <ReserveButton 
-                className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full mt-2"
+              <ReserveButton
+                className="mt-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <Phone className="mr-2 h-4 w-4" />
                 Reservar
               </ReserveButton>
             </div>

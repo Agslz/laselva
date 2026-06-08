@@ -15,7 +15,10 @@ export function ReserveButton({ prefill, onClick, className, children, ...props 
   return (
     <Button
       type="button"
-      className={cn(className)}
+      className={cn(
+        "bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-full",
+        className
+      )}
       onClick={(e) => {
         openReservation(prefill)
         onClick?.(e)

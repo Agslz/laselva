@@ -7,7 +7,6 @@ import {
   GlassWater, 
   Candy, 
   Package,
-  Phone,
   Gift,
 } from "lucide-react"
 
@@ -136,12 +135,8 @@ export function Promo() {
           <p className="text-lg text-foreground mb-6">
             <span className="font-semibold">La propuesta puede modificarse</span> o ajustarse según el presupuesto y las necesidades del cliente.
           </p>
-          <ReserveButton 
-            size="lg"
-            className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full"
-          >
-            <Phone className="mr-2 h-5 w-5" />
-            Consultar Promo Completa
+          <ReserveButton size="lg">
+            Reservar
           </ReserveButton>
         </div>
 

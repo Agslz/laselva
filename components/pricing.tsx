@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ReserveButton } from "@/components/reserve-button"
 import { SectionBackground } from "@/components/section-background"
 import { PRECIOS_CHARACTERS } from "@/lib/madagascar-characters"
-import { Check, Star, Phone, Coins } from "lucide-react"
+import { Check, Star, Coins } from "lucide-react"
 
 const plans = [
   {
@@ -110,15 +110,8 @@ export function Pricing() {
                   ))}
                 </ul>
                 
-                <ReserveButton 
-                  className={`w-full rounded-full ${
-                    plan.popular 
-                      ? "bg-primary hover:bg-primary/90" 
-                      : "bg-accent hover:bg-accent/90 text-accent-foreground"
-                  }`}
-                >
-                  <Phone className="mr-2 h-4 w-4" />
-                  Consultar
+                <ReserveButton className="w-full">
+                  Reservar
                 </ReserveButton>
               </CardContent>
             </Card>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ReserveButton } from "@/components/reserve-button"
 import { SectionBackground } from "@/components/section-background"
 import { UBICACION_CHARACTERS } from "@/lib/madagascar-characters"
-import { MapPin, Clock, Phone, MapPinned } from "lucide-react"
+import { MapPin, Clock, MapPinned } from "lucide-react"
 
 const schedules = [
   { day: "Lunes a Sábado", morning: "9:30 a 14:00 hs", afternoon: "18:00 a 21:30 hs" },
@@ -93,29 +93,12 @@ export function Location() {
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg"
-                className="flex-1 bg-primary hover:bg-primary/90 rounded-full py-6 text-base sm:text-lg shadow-md"
-                asChild
-              >
-                <a href="tel:+5492613455391">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Llamar Ahora
-                </a>
-              </Button>
-            </div>
-
             <div className="bg-gradient-to-r from-primary via-emerald-600 to-secondary rounded-2xl p-8 text-white text-center shadow-xl">
               <h3 className="text-2xl font-bold mb-2">¿Listo para reservar?</h3>
               <p className="text-white/90 mb-4">
                 Animate a festejar distinto en un salón lleno de color y diversión.
               </p>
-              <ReserveButton 
-                size="lg" 
-                variant="secondary"
-                className="rounded-full shadow-md"
-              >
+              <ReserveButton size="lg" className="shadow-md">
                 Reservar Mi Fecha
               </ReserveButton>
             </div>

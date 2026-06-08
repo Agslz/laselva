@@ -172,7 +172,7 @@ export function ReservationModal({ open, onOpenChange, prefill }: ReservationMod
       setError(
         err instanceof Error
           ? err.message
-          : "No pudimos enviar la reserva. Intentá de nuevo o contactanos por teléfono."
+          : "No pudimos enviar la reserva. Intentá de nuevo en unos minutos."
       )
     } finally {
       setSubmitting(false)

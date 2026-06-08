@@ -50,10 +50,7 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <ReserveButton
-              size="lg"
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground text-lg px-8 py-6 rounded-full shadow-xl"
-            >
+            <ReserveButton size="lg" className="text-lg px-8 py-6 shadow-xl">
               Reservar Ahora
             </ReserveButton>
             <Button
